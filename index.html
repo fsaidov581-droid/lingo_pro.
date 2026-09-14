@@ -1,0 +1,1795 @@
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lingo Pro 🇬🇧</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    min-height:100%;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    color:#222;
+
+    /* 🇬🇧 ЛОНДОН */
+    background-image:
+        linear-gradient(
+            rgba(10,20,40,.48),
+            rgba(10,20,40,.62)
+        ),
+        url("https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2200&q=90");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    background-repeat:no-repeat;
+}
+
+/* ОСНОВНОЕ ОКНО */
+
+.app{
+    width:100%;
+    max-width:620px;
+    min-height:100vh;
+    margin:auto;
+
+    background:rgba(255,255,255,.94);
+
+    box-shadow:
+        0 0 45px rgba(0,0,0,.35);
+
+    backdrop-filter:blur(8px);
+}
+
+/* ВЕРХНЯЯ ПАНЕЛЬ */
+
+.top{
+    padding:15px;
+    background:rgba(255,255,255,.97);
+    border-bottom:1px solid #eee;
+
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.top-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.stats{
+    display:flex;
+    gap:5px;
+}
+
+.stat{
+    background:#f2f2f6;
+    padding:8px 9px;
+    border-radius:12px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+/* КОНТЕНТ */
+
+.content{
+    padding:22px 18px 40px;
+}
+
+.screen{
+    display:none;
+}
+
+.screen.active{
+    display:block;
+}
+
+/* ПРОФИЛЬ */
+
+.welcome{
+    text-align:center;
+    padding:30px 0;
+}
+
+.owl{
+    font-size:72px;
+    margin-bottom:10px;
+}
+
+h1{
+    font-size:31px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#707070;
+    line-height:1.5;
+}
+
+.name-box{
+    margin-top:25px;
+}
+
+input{
+    width:100%;
+    padding:16px;
+
+    border:2px solid #ddd;
+    border-radius:15px;
+
+    outline:none;
+    font-size:17px;
+    background:white;
+}
+
+input:focus{
+    border-color:#5b5ce2;
+}
+
+.main-btn{
+    width:100%;
+    margin-top:12px;
+
+    padding:16px;
+
+    border:none;
+    border-radius:15px;
+
+    background:#5b5ce2;
+    color:white;
+
+    font-weight:bold;
+    cursor:pointer;
+
+    font-size:17px;
+
+    transition:.15s;
+}
+
+.main-btn:hover{
+    transform:translateY(-1px);
+    opacity:.93;
+}
+
+.info{
+    margin:20px 0;
+    padding:17px;
+
+    border-radius:16px;
+
+    background:#f5f5fa;
+
+    line-height:1.5;
+}
+
+/* ГЛАВНЫЙ ЭКРАН */
+
+.home-card{
+    text-align:center;
+    padding:25px 0;
+}
+
+.home-card .owl{
+    font-size:60px;
+}
+
+/* УРОВНИ */
+
+.back-btn{
+    border:none;
+    background:none;
+
+    cursor:pointer;
+    color:#555;
+
+    margin-bottom:15px;
+
+    font-weight:bold;
+}
+
+.level-title{
+    text-align:center;
+    margin-bottom:18px;
+}
+
+.level-number{
+    font-size:14px;
+    color:#777;
+    margin-bottom:6px;
+}
+
+.level-name{
+    font-size:27px;
+    font-weight:900;
+}
+
+.levels{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.level{
+    aspect-ratio:1;
+
+    border:none;
+    border-radius:16px;
+
+    background:#eee;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    transition:.15s;
+}
+
+.level:hover{
+    transform:translateY(-2px);
+}
+
+.level.open{
+    background:#e9e8ff;
+    color:#4241a0;
+}
+
+.level.done{
+    background:#dcf8e7;
+    color:#16813b;
+}
+
+.level.locked{
+    cursor:not-allowed;
+    opacity:.55;
+}
+
+/* ТЕСТ */
+
+.progress{
+    height:10px;
+
+    background:#eee;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin:18px 0;
+}
+
+.progress-bar{
+    height:100%;
+    width:0;
+
+    background:#5b5ce2;
+
+    transition:.3s;
+}
+
+.difficulty{
+    display:inline-block;
+
+    padding:6px 10px;
+
+    border-radius:10px;
+
+    font-size:13px;
+    font-weight:bold;
+
+    background:#eee;
+
+    margin-top:8px;
+}
+
+.question-card{
+    border:1px solid #eee;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    box-shadow:
+        0 7px 25px rgba(0,0,0,.07);
+
+    background:white;
+}
+
+.question{
+    font-size:22px;
+    font-weight:800;
+
+    line-height:1.4;
+
+    margin-bottom:20px;
+}
+
+.answers{
+    display:grid;
+    gap:10px;
+}
+
+.answer{
+    width:100%;
+
+    padding:15px;
+
+    border:2px solid #ddd;
+
+    background:white;
+
+    border-radius:14px;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:.15s;
+}
+
+.answer:hover{
+    border-color:#777;
+}
+
+.answer.correct{
+    border-color:#24a456;
+    background:#e9f9ef;
+}
+
+.answer.wrong{
+    border-color:#e34d4d;
+    background:#fff0f0;
+}
+
+.answer.disabled{
+    pointer-events:none;
+}
+
+.feedback{
+    min-height:25px;
+
+    margin-top:15px;
+
+    font-weight:bold;
+}
+
+.next-btn{
+    width:100%;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#222;
+
+    color:white;
+
+    cursor:pointer;
+
+    display:none;
+}
+
+/* РЕЗУЛЬТАТ */
+
+.result{
+    text-align:center;
+    padding:30px 0;
+}
+
+.result-icon{
+    font-size:72px;
+}
+
+.result h2{
+    font-size:29px;
+    margin:12px 0;
+}
+
+.result p{
+    color:#666;
+    line-height:1.6;
+}
+
+/* НИЗ */
+
+.footer{
+    text-align:center;
+
+    color:#aaa;
+
+    font-size:12px;
+
+    margin-top:30px;
+}
+
+/* ТЕЛЕФОН */
+
+@media(max-width:450px){
+
+    .logo{
+        font-size:20px;
+    }
+
+    .stat{
+        padding:7px 6px;
+        font-size:12px;
+    }
+
+    .levels{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    h1{
+        font-size:27px;
+    }
+
+    .question{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="top">
+
+    <div class="top-row">
+
+        <div class="logo">
+            🦉 Lingo Pro
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                🔥 <span id="streak">0</span>
+            </div>
+
+            <div class="stat">
+                💎 <span id="gems">50</span>
+            </div>
+
+            <div class="stat">
+                ⭐ <span id="points">0</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+<!-- ================= ПРОФИЛЬ ================= -->
+
+<section id="profileScreen" class="screen active">
+
+    <div class="welcome">
+
+        <div class="owl">
+            🦉
+        </div>
+
+        <h1>
+            Lingo Pro
+        </h1>
+
+        <p class="subtitle">
+            Учись английскому шаг за шагом 🇬🇧
+        </p>
+
+        <div class="info">
+
+            <b>📚 60 уровней</b>
+
+            <p style="margin-top:7px">
+                От Beginner до Advanced.
+                Каждый следующий уровень становится сложнее.
+            </p>
+
+        </div>
+
+        <div class="name-box">
+
+            <input
+                id="nameInput"
+                type="text"
+                maxlength="20"
+                placeholder="Введи своё имя"
+            >
+
+            <button
+                class="main-btn"
+                onclick="startProfile()">
+
+                🚀 Начать обучение
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ГЛАВНЫЙ ЭКРАН ================= -->
+
+<section id="homeScreen" class="screen">
+
+    <div class="home-card">
+
+        <div class="owl">
+            🦉
+        </div>
+
+        <h1 id="helloName"></h1>
+
+        <p class="subtitle">
+            Продолжай свой путь в английском!
+        </p>
+
+    </div>
+
+
+    <div class="info">
+
+        <b>📈 Твой прогресс</b>
+
+        <p
+            id="progressText"
+            style="margin-top:8px">
+        </p>
+
+    </div>
+
+
+    <button
+        class="main-btn"
+        onclick="continueLearning()">
+
+        🚀 Продолжить обучение
+
+    </button>
+
+
+    <button
+        class="main-btn"
+        onclick="openLevels()">
+
+        📚 Все 60 уровней
+
+    </button>
+
+
+    <button
+        class="main-btn"
+        style="background:#eee;color:#333"
+        onclick="resetGame()">
+
+        🔄 Сбросить прогресс
+
+    </button>
+
+</section>
+
+
+<!-- ================= УРОВНИ ================= -->
+
+<section id="levelsScreen" class="screen">
+
+    <button
+        class="back-btn"
+        onclick="showHome()">
+
+        ← Назад
+
+    </button>
+
+
+    <div class="level-title">
+
+        <div class="level-number">
+            Твой путь
+        </div>
+
+        <div class="level-name">
+            📚 60 уровней
+        </div>
+
+    </div>
+
+
+    <div
+        class="levels"
+        id="levelsContainer">
+    </div>
+
+</section>
+
+
+<!-- ================= ТЕСТ ================= -->
+
+<section id="quizScreen" class="screen">
+
+    <button
+        class="back-btn"
+        onclick="openLevels()">
+
+        ← К уровням
+
+    </button>
+
+
+    <div class="level-title">
+
+        <div
+            class="level-number"
+            id="quizLevelNumber">
+        </div>
+
+        <div
+            class="level-name"
+            id="quizLevelName">
+        </div>
+
+        <div
+            class="difficulty"
+            id="difficulty">
+        </div>
+
+    </div>
+
+
+    <div class="progress">
+
+        <div
+            class="progress-bar"
+            id="progressBar">
+        </div>
+
+    </div>
+
+
+    <div class="question-card">
+
+        <div
+            class="question"
+            id="question">
+        </div>
+
+
+        <div
+            class="answers"
+            id="answers">
+        </div>
+
+
+        <div
+            class="feedback"
+            id="feedback">
+        </div>
+
+
+        <button
+            class="next-btn"
+            id="nextButton"
+            onclick="nextQuestion()">
+
+            Следующий вопрос →
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= РЕЗУЛЬТАТ ================= -->
+
+<section id="resultScreen" class="screen">
+
+    <div class="result">
+
+        <div class="result-icon">
+            🏆
+        </div>
+
+
+        <h2 id="resultTitle"></h2>
+
+
+        <p id="resultText"></p>
+
+
+        <div class="info">
+
+            ⭐ <b id="resultPoints"></b>
+
+            <br><br>
+
+            💎 <b id="resultGems"></b>
+
+        </div>
+
+
+        <button
+            class="main-btn"
+            onclick="continueLearning()">
+
+            🚀 Следующий уровень
+
+        </button>
+
+
+        <button
+            class="main-btn"
+            style="background:#eee;color:#333"
+            onclick="openLevels()">
+
+            📚 Все уровни
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<div class="footer">
+
+    Lingo Pro 🇬🇧 • Учись каждый день
+
+</div>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* ========================================
+   LINGO PRO
+======================================== */
+
+const TOTAL_LEVELS = 60;
+
+let game = {
+
+    name:"",
+    points:0,
+    gems:50,
+    streak:0,
+    completed:[],
+    lastDay:""
+
+};
+
+let currentLevel=1;
+
+let currentQuestion=0;
+
+let scoreThisLevel=0;
+
+let selectedQuestions=[];
+
+
+/* ========================================
+   НАЗВАНИЯ 60 УРОВНЕЙ
+======================================== */
+
+const levelNames=[
+
+"Beginner 1",
+"Beginner 2",
+"Beginner 3",
+"Beginner 4",
+"Beginner 5",
+"Beginner 6",
+"Beginner 7",
+"Beginner 8",
+"Beginner 9",
+"Beginner 10",
+
+"Elementary 1",
+"Elementary 2",
+"Elementary 3",
+"Elementary 4",
+"Elementary 5",
+"Elementary 6",
+"Elementary 7",
+"Elementary 8",
+"Elementary 9",
+"Elementary 10",
+
+"Pre-Intermediate 1",
+"Pre-Intermediate 2",
+"Pre-Intermediate 3",
+"Pre-Intermediate 4",
+"Pre-Intermediate 5",
+"Pre-Intermediate 6",
+"Pre-Intermediate 7",
+"Pre-Intermediate 8",
+"Pre-Intermediate 9",
+"Pre-Intermediate 10",
+
+"Intermediate 1",
+"Intermediate 2",
+"Intermediate 3",
+"Intermediate 4",
+"Intermediate 5",
+"Intermediate 6",
+"Intermediate 7",
+"Intermediate 8",
+"Intermediate 9",
+"Intermediate 10",
+
+"Upper-Intermediate 1",
+"Upper-Intermediate 2",
+"Upper-Intermediate 3",
+"Upper-Intermediate 4",
+"Upper-Intermediate 5",
+"Upper-Intermediate 6",
+"Upper-Intermediate 7",
+"Upper-Intermediate 8",
+"Upper-Intermediate 9",
+"Upper-Intermediate 10",
+
+"Advanced 1",
+"Advanced 2",
+"Advanced 3",
+"Advanced 4",
+"Advanced 5",
+"Advanced 6",
+"Advanced 7",
+"Advanced 8",
+"Advanced 9",
+"Advanced 10"
+
+];
+
+
+/* ========================================
+   ВОПРОСЫ BEGINNER
+======================================== */
+
+const beginner=[
+
+[
+["Choose: I ___ a student.",["am","is","are","be"],0],
+["She ___ my sister.",["am","are","is","be"],2],
+["Opposite of 'big'?",["small","long","fast","old"],0],
+["Choose: ___ apple.",["a","an","are","is"],1],
+["They ___ happy.",["is","am","are","be"],2]
+],
+
+[
+["I ___ from Tajikistan.",["am","is","are","be"],0],
+["He has ___ dog.",["a","an","are","is"],0],
+["Opposite of 'hot'?",["cold","big","new","fast"],0],
+["We ___ friends.",["is","am","are","be"],2],
+["She ___ a teacher.",["am","are","is","be"],2]
+],
+
+[
+["I ___ coffee every morning.",["drink","drinks","drinking","drank"],0],
+["She ___ English.",["speak","speaks","speaking","spoke"],1],
+["They ___ football.",["play","plays","playing","played"],0],
+["He ___ to school every day.",["go","goes","going","went"],1],
+["We ___ TV in the evening.",["watch","watches","watching","watched"],0]
+],
+
+[
+["___ you like pizza?",["Do","Does","Are","Is"],0],
+["___ she work here?",["Do","Does","Is","Are"],1],
+["I don't ___ tea.",["likes","like","liked","liking"],1],
+["He doesn't ___ football.",["plays","play","played","playing"],1],
+["Do they ___ English?",["speaks","speak","speaking","spoke"],1]
+],
+
+[
+["Yesterday I ___ to school.",["go","goes","went","going"],2],
+["She ___ a movie last night.",["watch","watched","watches","watching"],1],
+["We ___ pizza yesterday.",["eat","eats","ate","eating"],2],
+["He ___ his homework.",["finish","finished","finishes","finishing"],1],
+["They ___ home late.",["come","came","comes","coming"],1]
+],
+
+[
+["I am ___ TV now.",["watch","watched","watching","watches"],2],
+["She is ___ dinner.",["cook","cooked","cooks","cooking"],3],
+["They are ___ football.",["play","playing","played","plays"],1],
+["He is ___ a book.",["read","reading","reads","readed"],1],
+["We are ___ English.",["study","studying","studied","studies"],1]
+],
+
+[
+["There ___ a book on the table.",["is","are","am","be"],0],
+["There ___ three chairs.",["is","are","am","be"],1],
+["The cat is ___ the table.",["on","at","to","from"],0],
+["I live ___ Dushanbe.",["at","on","in","to"],2],
+["School starts ___ Monday.",["in","on","at","to"],1]
+],
+
+[
+["This car is ___ than that car.",["fast","faster","fastest","more fast"],1],
+["My house is ___ than yours.",["big","bigger","biggest","more big"],1],
+["She is the ___ student.",["smart","smarter","smartest","more smart"],2],
+["Today is ___ than yesterday.",["cold","colder","coldest","more cold"],1],
+["This is the ___ movie.",["good","better","best","well"],2]
+],
+
+[
+["I have ___ finished my homework.",["just","yesterday","last","ago"],0],
+["She has ___ been to London.",["never","yesterday","last","ago"],0],
+["Have you ___ eaten sushi?",["ever","yesterday","last","ago"],0],
+["He has lived here ___ 2020.",["for","since","from","during"],1],
+["We have known him ___ five years.",["since","for","from","at"],1]
+],
+
+[
+["I ___ visit my grandmother tomorrow.",["am going to","went","have","was"],0],
+["I think she ___ win.",["will","is","was","has"],0],
+["We ___ probably arrive late.",["will","are","were","have"],0],
+["He ___ call you tonight.",["will","did","was","has"],0],
+["Look! It ___ rain.",["is going to","went","has","did"],0]
+]
+
+];
+
+
+/* ========================================
+   СЛОЖНЫЕ ВОПРОСЫ
+======================================== */
+
+const advancedSets=[
+
+[
+["I enjoy ___ books.",["read","reading","to readed","reads"],1],
+["She wants ___ English.",["learn","learning","to learn","learned"],2],
+["He decided ___ home.",["go","going","to go","went"],2],
+["They love ___ football.",["play","playing","to playing","played"],1],
+["I need ___ water.",["drink","drinking","to drink","drank"],2]
+],
+
+[
+["If it rains, I ___ home.",["stay","stayed","will stayed","would staying"],0],
+["If you study, you ___ pass.",["will","would","were","have"],0],
+["If I had time, I ___ travel.",["will","would","can","am"],1],
+["If she calls, I ___ answer.",["will","would","did","have"],0],
+["If I were you, I ___ apologize.",["will","would","am","have"],1]
+],
+
+[
+["The man ___ lives next door is a doctor.",["which","who","where","what"],1],
+["This is the book ___ I told you about.",["who","which","where","when"],1],
+["That's the place ___ we met.",["who","which","where","what"],2],
+["The woman ___ called you is my teacher.",["who","which","where","when"],0],
+["I remember the day ___ we met.",["who","which","where","when"],3]
+],
+
+[
+["I wish I ___ more free time.",["have","had","will have","am having"],1],
+["If I ___ you, I would take the job.",["am","was","were","be"],2],
+["I wish he ___ here.",["is","were","will","has"],1],
+["If she had studied, she ___ the exam.",["passes","would pass","would have passed","passed"],2],
+["If we had left earlier, we ___ the train.",["would catch","would have caught","caught","will catch"],1]
+],
+
+[
+["When I arrived, they ___ dinner.",["had","were having","have","are having"],1],
+["She ___ when I called her.",["slept","was sleeping","has slept","sleep"],1],
+["I was tired because I ___ all day.",["worked","had been working","work","am working"],1],
+["After he ___ dinner, he went out.",["had eaten","eats","is eating","eat"],0],
+["They ___ before we arrived.",["left","had left","leave","have left"],1]
+],
+
+[
+["The homework ___ by the students.",["did","was done","does","has do"],1],
+["English ___ in many countries.",["speaks","is spoken","spoken","speak"],1],
+["The car ___ yesterday.",["was repaired","repaired","is repair","has repair"],0],
+["The letter ___ tomorrow.",["will send","will be sent","sent","is sending"],1],
+["This building ___ in 1990.",["built","was built","is build","has building"],1]
+],
+
+[
+["Despite ___ tired, he continued working.",["be","being","was","to being"],1],
+["Although ___ late, she joined the meeting.",["arriving","arrived","arrive","to arrive"],0],
+["He succeeded ___ working hard.",["because","by","although","despite"],1],
+["She left early ___ feeling sick.",["because","despite","although","but"],0],
+["___ the rain, they played football.",["Despite","Because","Although","Since"],0]
+],
+
+[
+["I'd rather ___ at home tonight.",["stay","staying","to stay","stayed"],0],
+["I'd rather you ___ me earlier.",["tell","told","will tell","telling"],1],
+["It's time we ___ home.",["go","went","will go","going"],1],
+["You had better ___ now.",["leave","leaving","to leave","left"],0],
+["I would prefer ___ by train.",["travel","travelling","to travel","travelled"],2]
+],
+
+[
+["The company is expected ___ profits.",["increase","to increase","increasing","increased"],1],
+["He is believed ___ abroad.",["live","to live","living","lived"],1],
+["She is known ___ several languages.",["speak","to speak","speaking","spoke"],1],
+["The project is thought ___ successful.",["be","to be","being","was"],1],
+["He is said ___ the company.",["own","to own","owning","owned"],1]
+],
+
+[
+["Not only ___ late, but he also forgot his keys.",["he was","was he","he is","is he"],1],
+["Never ___ such a beautiful place.",["I have seen","have I seen","I saw","saw I"],1],
+["Rarely ___ so difficult.",["the test is","is the test","test is","does test"],1],
+["Only then ___ the truth.",["I understood","did I understand","I understand","understood I"],1],
+["Hardly ___ when the phone rang.",["I had sat down","had I sat down","I sat down","did I sat"],1]
+]
+
+];
+
+
+/* ========================================
+   ВОПРОСЫ 21–60
+======================================== */
+
+const higher=[
+
+[
+["If I had known, I ___ helped.",["would have","will have","would","have"],0],
+["She succeeded ___ passing the exam.",["in","on","at","for"],0],
+["We look forward to ___ you.",["see","seeing","saw","seen"],1],
+["He denied ___ the money.",["take","taking","to take","took"],1],
+["By next year, she ___ here for ten years.",["works","will have worked","worked","has worked"],1]
+],
+
+[
+["The proposal was rejected, ___ surprised everyone.",["that","which","what","where"],1],
+["No sooner ___ the room than everyone talked.",["he entered","had he entered","he had entered","did he enter"],1],
+["She speaks as though she ___ everything.",["knows","knew","has known","will know"],1],
+["It is essential that every student ___ present.",["is","be","was","being"],1],
+["He would rather we ___ tomorrow.",["make","made","will make","making"],1]
+],
+
+[
+["Had it not been for your help, I ___ the project.",["wouldn't complete","wouldn't have completed","didn't complete","won't complete"],1],
+["The evidence was insufficient to ___ his claim.",["substantiate","substantial","substantially","substantiated"],0],
+["The policy was introduced with a view to ___ efficiency.",["improve","improving","improved","improvement"],1],
+["Her argument was persuasive, albeit ___ controversial.",["some","somewhat","many","very much"],1],
+["The committee recommended that it ___ revised.",["is","be","was","being"],1]
+],
+
+[
+["The manager insisted that he ___ immediately.",["leave","left","leaves","leaving"],0],
+["The report needs ___ before Friday.",["finish","to finish","finishing","finished"],2],
+["She speaks English very ___.",["good","well","betterly","best"],1],
+["He is capable ___ solving difficult problems.",["of","to","for","at"],0],
+["The meeting was postponed ___ technical problems.",["because of","although","despite","while"],0]
+]
+
+];
+
+
+/* ========================================
+   ПОЛУЧЕНИЕ ВОПРОСОВ
+======================================== */
+
+function getQuestions(level){
+
+    let raw=[];
+
+    if(level<=10){
+
+        raw=beginner[level-1];
+
+    }else if(level<=20){
+
+        raw=advancedSets[level-11];
+
+    }else{
+
+        raw=higher[(level-21)%higher.length];
+
+    }
+
+    return shuffle(
+        raw.map(item=>({
+
+            q:item[0],
+            a:item[1],
+            c:item[2]
+
+        }))
+    );
+}
+
+
+/* ========================================
+   СОХРАНЕНИЕ
+======================================== */
+
+function saveGame(){
+
+    localStorage.setItem(
+        "LINGO_PRO_SAVE",
+        JSON.stringify(game)
+    );
+}
+
+
+function loadGame(){
+
+    const saved=
+        localStorage.getItem(
+            "LINGO_PRO_SAVE"
+        );
+
+    if(saved){
+
+        try{
+
+            game=JSON.parse(saved);
+
+        }catch(e){
+
+            console.log(e);
+
+        }
+
+    }
+
+    updateStats();
+}
+
+
+/* ========================================
+   ПРОФИЛЬ
+======================================== */
+
+function startProfile(){
+
+    const input=
+        document.getElementById(
+            "nameInput"
+        );
+
+    const name=
+        input.value.trim();
+
+    if(!name){
+
+        alert(
+            "Пожалуйста, введи своё имя."
+        );
+
+        return;
+    }
+
+    game.name=name;
+
+    updateStreak();
+
+    saveGame();
+
+    showHome();
+}
+
+
+function showHome(){
+
+    document.getElementById(
+        "helloName"
+    ).textContent=
+        "Привет, "+game.name+"! 👋";
+
+    document.getElementById(
+        "progressText"
+    ).textContent=
+        `Пройдено ${game.completed.length} из ${TOTAL_LEVELS} уровней.`;
+
+    updateStats();
+
+    showScreen("homeScreen");
+}
+
+
+/* ========================================
+   ЭКРАНЫ
+======================================== */
+
+function showScreen(id){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(s=>{
+            s.classList.remove("active");
+        });
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+    window.scrollTo(0,0);
+}
+
+
+/* ========================================
+   УРОВНИ
+======================================== */
+
+function openLevels(){
+
+    renderLevels();
+
+    showScreen("levelsScreen");
+}
+
+
+function renderLevels(){
+
+    const container=
+        document.getElementById(
+            "levelsContainer"
+        );
+
+    container.innerHTML="";
+
+    for(let i=1;i<=60;i++){
+
+        const btn=
+            document.createElement("button");
+
+        btn.className="level";
+
+        const completed=
+            game.completed.includes(i);
+
+        const unlocked=
+            i===1 ||
+            game.completed.includes(i-1);
+
+        if(completed){
+
+            btn.classList.add("done");
+
+            btn.innerHTML=
+                "✓ "+i;
+
+        }else if(unlocked){
+
+            btn.classList.add("open");
+
+            btn.innerHTML=
+                "▶ "+i;
+
+        }else{
+
+            btn.classList.add("locked");
+
+            btn.innerHTML=
+                "🔒 "+i;
+
+        }
+
+        if(unlocked){
+
+            btn.onclick=()=>{
+                startLevel(i);
+            };
+
+        }
+
+        container.appendChild(btn);
+    }
+}
+
+
+/* ========================================
+   НАЧАЛО УРОВНЯ
+======================================== */
+
+function startLevel(level){
+
+    currentLevel=level;
+
+    currentQuestion=0;
+
+    scoreThisLevel=0;
+
+    selectedQuestions=
+        getQuestions(level);
+
+    document.getElementById(
+        "quizLevelNumber"
+    ).textContent=
+        "Уровень "+level+" из 60";
+
+    document.getElementById(
+        "quizLevelName"
+    ).textContent=
+        levelNames[level-1];
+
+    document.getElementById(
+        "difficulty"
+    ).textContent=
+        getDifficulty(level);
+
+    showScreen("quizScreen");
+
+    showQuestion();
+}
+
+
+/* ========================================
+   СЛОЖНОСТЬ
+======================================== */
+
+function getDifficulty(level){
+
+    if(level<=10)
+        return "🟢 Beginner";
+
+    if(level<=20)
+        return "🔵 Elementary";
+
+    if(level<=30)
+        return "🟡 Pre-Intermediate";
+
+    if(level<=40)
+        return "🟠 Intermediate";
+
+    if(level<=50)
+        return "🔴 Upper-Intermediate";
+
+    return "🟣 Advanced";
+}
+
+
+/* ========================================
+   ПОКАЗ ВОПРОСА
+======================================== */
+
+function showQuestion(){
+
+    const data=
+        selectedQuestions[currentQuestion];
+
+    const total=
+        selectedQuestions.length;
+
+    document.getElementById(
+        "progressBar"
+    ).style.width=
+        (currentQuestion/total*100)+"%";
+
+    document.getElementById(
+        "question"
+    ).textContent=
+        data.q;
+
+    const answers=
+        document.getElementById(
+            "answers"
+        );
+
+    answers.innerHTML="";
+
+    document.getElementById(
+        "feedback"
+    ).textContent="";
+
+    document.getElementById(
+        "nextButton"
+    ).style.display="none";
+
+    data.a.forEach((answer,index)=>{
+
+        const btn=
+            document.createElement(
+                "button"
+            );
+
+        btn.className="answer";
+
+        btn.textContent=
+            String.fromCharCode(65+index)
+            +". "
+            +answer;
+
+        btn.onclick=()=>{
+            checkAnswer(index,btn);
+        };
+
+        answers.appendChild(btn);
+
+    });
+}
+
+
+/* ========================================
+   ПРОВЕРКА
+======================================== */
+
+function checkAnswer(index,button){
+
+    const data=
+        selectedQuestions[currentQuestion];
+
+    const all=
+        document.querySelectorAll(
+            ".answer"
+        );
+
+    all.forEach(b=>{
+        b.classList.add("disabled");
+    });
+
+    if(index===data.c){
+
+        button.classList.add("correct");
+
+        document.getElementById(
+            "feedback"
+        ).textContent=
+            "✅ Правильно! Отлично!";
+
+        scoreThisLevel++;
+
+        game.points+=10;
+
+    }else{
+
+        button.classList.add("wrong");
+
+        all[data.c]
+            .classList.add("correct");
+
+        document.getElementById(
+            "feedback"
+        ).textContent=
+            "❌ Неправильно. Правильный ответ: "
+            +data.a[data.c];
+
+    }
+
+    document.getElementById(
+        "nextButton"
+    ).style.display="block";
+
+    updateStats();
+
+    saveGame();
+}
+
+
+/* ========================================
+   СЛЕДУЮЩИЙ
+======================================== */
+
+function nextQuestion(){
+
+    currentQuestion++;
+
+    if(
+        currentQuestion>=
+        selectedQuestions.length
+    ){
+
+        finishLevel();
+
+    }else{
+
+        showQuestion();
+
+    }
+}
+
+
+/* ========================================
+   ЗАВЕРШЕНИЕ УРОВНЯ
+======================================== */
+
+function finishLevel(){
+
+    const total=
+        selectedQuestions.length;
+
+    const passed=
+        scoreThisLevel>=
+        Math.ceil(total*.6);
+
+    if(passed){
+
+        if(
+            !game.completed.includes(
+                currentLevel
+            )
+        ){
+
+            game.completed.push(
+                currentLevel
+            );
+
+        }
+
+        const gemBonus=
+            10+currentLevel;
+
+        game.gems+=gemBonus;
+
+        game.points+=
+            currentLevel*5;
+
+        document.getElementById(
+            "resultTitle"
+        ).textContent=
+            "Уровень пройден! 🎉";
+
+        document.getElementById(
+            "resultText"
+        ).textContent=
+            `Правильных ответов: ${scoreThisLevel} из ${total}.`;
+
+        document.getElementById(
+            "resultPoints"
+        ).textContent=
+            `+${10*scoreThisLevel+
+            currentLevel*5} очков`;
+
+        document.getElementById(
+            "resultGems"
+        ).textContent=
+            `+${gemBonus} кристаллов`;
+
+    }else{
+
+        document.getElementById(
+            "resultTitle"
+        ).textContent=
+            "Попробуй ещё раз! 💪";
+
+        document.getElementById(
+            "resultText"
+        ).textContent=
+            `Правильных ответов: ${scoreThisLevel} из ${total}. Нужно минимум 60%.`;
+
+        document.getElementById(
+            "resultPoints"
+        ).textContent=
+            `+${10*scoreThisLevel} очков`;
+
+        document.getElementById(
+            "resultGems"
+        ).textContent=
+            "0";
+
+    }
+
+    saveGame();
+
+    updateStats();
+
+    showScreen("resultScreen");
+}
+
+
+/* ========================================
+   ПРОДОЛЖИТЬ
+======================================== */
+
+function continueLearning(){
+
+    let next=1;
+
+    while(
+        game.completed.includes(next)
+        &&
+        next<=TOTAL_LEVELS
+    ){
+
+        next++;
+
+    }
+
+    if(next>TOTAL_LEVELS){
+
+        alert(
+            "🏆 Поздравляю! Ты прошёл все 60 уровней!"
+        );
+
+        openLevels();
+
+        return;
+    }
+
+    startLevel(next);
+}
+
+
+/* ========================================
+   СЕРИЯ
+======================================== */
+
+function updateStreak(){
+
+    const today=
+        new Date().toDateString();
+
+    if(game.lastDay===today){
+        return;
+    }
+
+    if(!game.lastDay){
+
+        game.streak=1;
+
+    }else{
+
+        const old=
+            new Date(game.lastDay);
+
+        const now=
+            new Date();
+
+        const diff=
+            Math.floor(
+                (now-old)/
+                (1000*60*60*24)
+            );
+
+        if(diff===1){
+
+            game.streak++;
+
+        }else if(diff>1){
+
+            game.streak=1;
+
+        }
+
+    }
+
+    game.lastDay=today;
+}
+
+
+/* ========================================
+   СТАТИСТИКА
+======================================== */
+
+function updateStats(){
+
+    document.getElementById(
+        "streak"
+    ).textContent=
+        game.streak||0;
+
+    document.getElementById(
+        "gems"
+    ).textContent=
+        game.gems??50;
+
+    document.getElementById(
+        "points"
+    ).textContent=
+        game.points||0;
+}
+
+
+/* ========================================
+   СБРОС
+======================================== */
+
+function resetGame(){
+
+    if(!confirm(
+        "Удалить весь прогресс Lingo Pro?"
+    )){
+        return;
+    }
+
+    localStorage.removeItem(
+        "LINGO_PRO_SAVE"
+    );
+
+    game={
+        name:"",
+        points:0,
+        gems:50,
+        streak:0,
+        completed:[],
+        lastDay:""
+    };
+
+    document.getElementById(
+        "nameInput"
+    ).value="";
+
+    updateStats();
+
+    showScreen(
+        "profileScreen"
+    );
+}
+
+
+/* ========================================
+   ПЕРЕМЕШИВАНИЕ
+======================================== */
+
+function shuffle(array){
+
+    for(
+        let i=array.length-1;
+        i>0;
+        i--
+    ){
+
+        const j=
+            Math.floor(
+                Math.random()*(i+1)
+            );
+
+        [
+            array[i],
+            array[j]
+        ]=[
+            array[j],
+            array[i]
+        ];
+
+    }
+
+    return array;
+}
+
+
+/* ========================================
+   ЗАПУСК
+======================================== */
+
+loadGame();
+
+if(game.name){
+
+    showHome();
+
+}else{
+
+    showScreen(
+        "profileScreen"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
+```
