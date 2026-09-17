@@ -1,64 +1,3 @@
-```html
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Lingo Pro 🇬🇧</title>
-
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html,body{
-    min-height:100%;
-}
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    color:#222;
-
-    /* 🇬🇧 ЛОНДОН */
-    background-image:
-        linear-gradient(
-            rgba(10,20,40,.48),
-            rgba(10,20,40,.62)
-        ),
-        url("https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2200&q=90");
-
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
-    background-repeat:no-repeat;
-}
-
-/* ОСНОВНОЕ ОКНО */
-
-.app{
-    width:100%;
-    max-width:620px;
-    min-height:100vh;
-    margin:auto;
-
-    background:rgba(255,255,255,.94);
-
-    box-shadow:
-        0 0 45px rgba(0,0,0,.35);
-
-    backdrop-filter:blur(8px);
-}
-
-/* ВЕРХНЯЯ ПАНЕЛЬ */
-
-.top{
-    padding:15px;
-    background:rgba(255,255,255,.97);
-    border-bottom:1px solid #eee;
-
-    position:sticky;
     top:0;
     z-index:20;
 }
@@ -1793,3 +1732,4 @@ if(game.name){
 </body>
 </html>
 ```
+
