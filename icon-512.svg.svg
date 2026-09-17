@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect width="512" height="512" rx="110" fill="#58a700"></rect>
+<circle cx="256" cy="270" r="145" fill="#fff"></circle>
+<circle cx="200" cy="230" r="28" fill="#222"></circle>
+<circle cx="312" cy="230" r="28" fill="#222"></circle>
+<circle cx="200" cy="230" r="10" fill="#fff"></circle>
+<circle cx="312" cy="230" r="10" fill="#fff"></circle>
+<path d="M220 300 L256 335 L292 300" fill="#f5a623"></path>
+<path d="M130 160 Q160 90 220 120" fill="none" stroke="#fff" stroke-width="24" stroke-linecap="round"></path>
+<path d="M292 120 Q352 90 382 160" fill="none" stroke="#fff" stroke-width="24" stroke-linecap="round"></path>
+<text x="256" y="450" text-anchor="middle" font-family="Arial" font-size="54" font-weight="bold" fill="#fff">LP</text>
+</svg>
