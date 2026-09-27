@@ -1,0 +1,615 @@
+
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="Lingo Pro — учи языки шаг за шагом">
+<link rel="manifest" href="manifest.json">
+<title>Lingo Pro 2.0</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff}body{background:#0b1220;background-image:linear-gradient(rgba(5,12,24,.72),rgba(5,12,24,.86)),url("https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2000&q=85");background-size:cover;background-position:center;background-attachment:fixed}button,input,textarea,select{font:inherit}button{cursor:pointer}.app{min-height:100vh}.shell{width:min(1080px,calc(100% - 28px));margin:auto;padding:14px 0 34px}.header{position:sticky;top:10px;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border:1px solid rgba(255,255,255,.13);background:rgba(8,15,28,.78);backdrop-filter:blur(18px);border-radius:18px;box-shadow:0 12px 35px rgba(0,0,0,.25)}.logo{font-weight:900;font-size:20px;letter-spacing:-.4px}.menuBtn,.iconBtn{border:0;color:#fff;background:rgba(255,255,255,.09);border-radius:12px;padding:9px 12px}.stats{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.stat{font-size:13px;padding:7px 9px;border-radius:11px;background:rgba(255,255,255,.08);white-space:nowrap}.screen{display:none}.screen.active{display:block}.card{border:1px solid rgba(255,255,255,.13);background:rgba(9,18,34,.79);backdrop-filter:blur(16px);border-radius:22px;box-shadow:0 15px 45px rgba(0,0,0,.22)}.hero{margin-top:18px;padding:24px}.hero h1{margin:0 0 7px;font-size:clamp(25px,5vw,40px);line-height:1.08}.muted{color:#b8c3d5}.small{font-size:13px}.pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:rgba(124,92,255,.18);color:#ddd6ff;font-size:13px}.progress{height:10px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}.progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#6d5dfc,#27c6a5);border-radius:inherit;transition:.3s}.bigBtn{width:100%;border:0;border-radius:17px;padding:17px 18px;color:#fff;font-weight:900;background:linear-gradient(135deg,#6d5dfc,#8b5cf6);box-shadow:0 10px 25px rgba(109,93,252,.25)}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}.action{padding:17px;text-align:left;border:1px solid rgba(255,255,255,.11);color:#fff;background:rgba(255,255,255,.055);border-radius:18px}.action b{display:block;margin-bottom:5px}.action span{font-size:12px;color:#aeb9ca}.section{margin-top:16px;padding:18px}.section h2{margin:0 0 13px;font-size:18px}.two{display:grid;grid-template-columns:1.3fr .7fr;gap:14px;margin-top:14px}.languageRow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.lang{padding:15px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(255,255,255,.055);color:#fff;text-align:left}.lang.active{outline:2px solid rgba(124,92,255,.8)}.levelMap{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.levelNode{min-height:72px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(255,255,255,.05);color:#fff;padding:9px;text-align:left}.levelNode.done{background:rgba(39,198,165,.16)}.levelNode.current{outline:2px solid #7c6cff}.levelNode.locked{opacity:.42}.menuOverlay,.modalOverlay,.feedbackOverlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.66);display:none;align-items:center;justify-content:center;padding:18px}.menuOverlay.show,.modalOverlay.show,.feedbackOverlay.show{display:flex}.menu,.modal,.feedback{width:min(430px,calc(100vw - 30px));max-height:min(85vh,700px);overflow:auto;background:#101a2b;border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:18px;box-shadow:0 25px 80px rgba(0,0,0,.55);overflow-wrap:anywhere}.menu h3,.modal h3,.feedback h3{margin:0 0 12px}.menuItem{width:100%;padding:14px;margin-top:8px;border:0;border-radius:14px;text-align:left;color:#fff;background:rgba(255,255,255,.07)}.close{float:right;border:0;background:rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:7px 10px}.profile{max-width:520px;margin:60px auto;padding:25px}.profile input,.feedback textarea{width:100%;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:#0b1322;color:#fff;outline:none}.profile .bigBtn{margin-top:12px}.quiz{max-width:760px;margin:20px auto;padding:20px}.qtop{display:flex;justify-content:space-between;gap:10px;color:#b9c4d5}.question{font-size:clamp(23px,4vw,34px);font-weight:850;margin:24px 0}.answers{display:grid;gap:10px}.answer{padding:15px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.055);color:#fff;border-radius:15px;text-align:left}.answer:hover{background:rgba(124,92,255,.15)}.answer.correct{background:rgba(39,198,165,.2);border-color:#27c6a5}.answer.wrong{background:rgba(255,80,100,.18);border-color:#ff5064}.back{border:0;background:transparent;color:#bfc9da;padding:5px 0;margin-bottom:8px}.feedbackStars{display:flex;gap:7px;margin:14px 0}.star{border:0;background:transparent;font-size:31px;color:#667085;padding:0}.star.active{color:#ffd45c}.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:200;background:#111a2a;border:1px solid rgba(255,255,255,.14);padding:12px 16px;border-radius:13px;display:none}footer{text-align:center;color:#95a2b6;padding:24px 0;font-size:13px}
+
+/* ===== LINGO PRO ADMIN SYSTEM ===== */
+.adminWrap{margin-top:18px}.adminTop{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.roleBadge{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(124,92,255,.13);font-size:12px;font-weight:800}.adminGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.adminStat{padding:15px;border:1px solid rgba(255,255,255,.1);border-radius:17px;background:rgba(255,255,255,.045)}.adminStat strong{display:block;font-size:22px}.adminTable{width:100%;border-collapse:separate;border-spacing:0 8px}.adminTable th{font-size:12px;color:#91a0b5;text-align:left;padding:0 9px 4px}.adminTable td{padding:11px 9px;background:rgba(255,255,255,.045);border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);font-size:13px;vertical-align:middle}.adminTable td:first-child{border-left:1px solid rgba(255,255,255,.08);border-radius:12px 0 0 12px}.adminTable td:last-child{border-right:1px solid rgba(255,255,255,.08);border-radius:0 12px 12px 0}.roleSelect,.adminSelect{width:100%;background:#0b1322;color:#fff;border:1px solid rgba(255,255,255,.12);padding:8px 9px;border-radius:10px;outline:none}.miniBtn{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.07);color:#fff;border-radius:10px;padding:8px 10px}.miniBtn.danger{background:rgba(255,80,100,.12);border-color:rgba(255,80,100,.25)}.miniBtn.good{background:rgba(39,198,165,.12);border-color:rgba(39,198,165,.25)}.permissionGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.permItem{display:flex;gap:9px;align-items:flex-start;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.035)}.permItem input{margin-top:3px}.permItem span{font-size:12px;color:#dbe3ef}.auditRow{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:12px}.auditRow:last-child{border-bottom:0}.devtoolsBox{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;white-space:pre-wrap;word-break:break-word;background:#080e18;border:1px solid rgba(255,255,255,.09);padding:12px;border-radius:14px;color:#cbd5e1;max-height:340px;overflow:auto}.restricted{opacity:.55}.adminNote{font-size:12px;color:#92a0b4;line-height:1.5}.ownerGlow{box-shadow:0 0 0 1px rgba(255,208,76,.22),0 0 30px rgba(255,190,60,.07)}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.languageRow{grid-template-columns:repeat(2,1fr)}.levelMap{grid-template-columns:repeat(3,1fr)}.stats{display:none}.shell{width:min(100% - 18px,1080px)}.header{top:7px}.hero{padding:19px}.section{padding:15px}.adminGrid{grid-template-columns:repeat(2,1fr)}.permissionGrid{grid-template-columns:1fr}.adminTable{display:block;overflow:auto;white-space:nowrap}}@media(max-width:430px){.logo{font-size:18px}.menuBtn{padding:8px 10px}.grid{gap:8px}.action{padding:13px}.levelMap{grid-template-columns:repeat(2,1fr)}.profile{margin:35px auto;padding:20px}.adminGrid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app"><div class="shell">
+<header class="header"><div class="logo">🦉 Lingo Pro</div><div class="stats"><div class="stat">⭐ <b id="xp">0</b> XP</div><div class="stat">🔥 <b id="streak">0</b></div><div class="stat">💎 <b id="gems">50</b></div><div class="stat">❤️ <b id="lives">5</b></div></div><button class="menuBtn" onclick="openMenu()">⋮</button></header>
+<main id="home" class="screen active"><section class="hero card"><span class="pill" id="languagePill">🇬🇧 Английский • A1</span><h1>Привет, <span id="username">ученик</span> 👋</h1><p class="muted">Продолжай обучение и развивай свой английский каждый день.</p><div style="display:flex;justify-content:space-between;margin:18px 0 7px;font-size:13px"><span id="progressText">0 / 60 уровней</span><b id="percentText">0%</b></div><div class="progress"><i id="progressBar"></i></div><button class="bigBtn" style="margin-top:16px" onclick="continueLearning()">🚀 ПРОДОЛЖИТЬ ОБУЧЕНИЕ</button></section>
+<section class="grid"><button class="action" onclick="startLevel(getNextLevel())"><b>📚 Начать урок</b><span>Следующий доступный уровень</span></button><button class="action" onclick="showLevels()"><b>🗺️ Карта обучения</b><span>A1 → A2 → B1 → B2 → C1 → C2</span></button><button class="action" onclick="reviewMistakes()"><b>🧠 Повторить ошибки</b><span>Слабые темы и повторение</span></button><button class="action" onclick="showStats()"><b>📊 Моя статистика</b><span>XP, слова, ответы и прогресс</span></button></section>
+<div class="two"><section class="section card"><h2>🌟 Сегодня</h2><div class="action" style="margin-bottom:9px" onclick="startLevel(getNextLevel())"><b id="todayTitle">Уровень 1 — Hello & Basics</b><span>5 заданий • новый материал</span></div><div class="action" onclick="reviewMistakes()"><b>🔁 Умное повторение</b><span id="weakText">Пока ошибок мало — продолжай учиться!</span></div></section><section class="section card"><h2>⚡ Твои ресурсы</h2><p>⭐ XP: <b id="homeXP">0</b></p><p>🔥 Серия: <b id="homeStreak">0 дней</b></p><p>💎 Кристаллы: <b id="homeGems">50</b></p><p>❤️ Жизни: <b id="homeLives">5/5</b></p><button class="action" style="width:100%" onclick="buyLives()">❤️ Купить 5 жизней — 70 💎</button><p class="small muted" id="livesRecovery">❤️ У тебя все 5 жизней!</p></section></div>
+<section class="section card"><h2>🌍 Языки</h2><div class="languageRow"><button class="lang active" onclick="selectLanguage('english')">🇬🇧 <b>English</b><br><span class="small">A1–C2</span></button><button class="lang" onclick="openLanguage('korean')">🇰🇷 <b>한국어</b><br><span class="small">эксклюзивно для Ахмада</span></button><button class="lang" onclick="openLanguage('chinese')">🇨🇳 <b>中文</b><br><span class="small">A1–C2</span></button><button class="lang" onclick="openLanguage('german')">🇩🇪 <b>Deutsch</b><br><span class="small">A1–C2</span></button></div></section></main>
+<section id="levels" class="screen"><div class="section card" style="margin-top:18px"><button class="back" onclick="showHome()">← Назад</button><h2>🗺️ Карта обучения</h2><p class="muted small">Проходи уровни по порядку. Каждый уровень содержит 5 заданий.</p><div class="levelMap" id="levelList"></div></div></section>
+<section id="quiz" class="screen"><div class="quiz card"><button class="back" onclick="showHome()">← На главную</button><div class="qtop"><span id="levelTitle">Уровень 1</span><span id="qNumber">1 / 5</span></div><div class="progress" style="margin-top:12px"><i id="quizBar"></i></div><div class="question" id="question"></div><div class="answers" id="answers"></div><p class="small muted" id="answerHint"></p></div></section>
+<section id="profile" class="screen"><div class="profile card"><div style="font-size:50px">🦉</div><h1>Добро пожаловать в Lingo Pro</h1><p class="muted">Введи имя, чтобы сохранить свой прогресс.</p><input id="nameInput" maxlength="20" placeholder="Введи своё имя"><button class="bigBtn" onclick="registerUser()">🚀 Начать обучение</button></div></section>
+<section id="stats" class="screen"><div class="section card" style="margin-top:18px"><button class="back" onclick="showHome()">← Назад</button><h2>📊 Моя статистика</h2><div class="grid"><div class="action"><b id="statLevels">0</b><span>уровней завершено</span></div><div class="action"><b id="statXP">0</b><span>XP</span></div><div class="action"><b id="statCorrect">0%</b><span>правильных ответов</span></div><div class="action"><b id="statMistakes">0</b><span>ошибок</span></div></div><div class="section" style="margin-top:14px;background:rgba(255,255,255,.04)"><b>🦉 Совет совы</b><p id="owlAdvice" class="muted">Начни первый урок — статистика появится здесь.</p></div></div></section>
+<section id="languageCourse" class="screen"><div class="section card" style="margin-top:18px"><button class="back" onclick="showHome()">← Назад</button><h2 id="languageTitle">Курс</h2><p class="muted" id="languageDescription"></p><div class="levelMap" id="languageLevelList"></div></div></section>
+
+<section id="admin" class="screen">
+  <div class="adminWrap">
+    <div class="section card" id="adminShell">
+      <div class="adminTop">
+        <div>
+          <button class="back" onclick="showHome()">← Назад</button>
+          <h2 style="margin:0">🛡️ Админ-панель</h2>
+          <p class="muted small" id="adminSubtitle">Управление доступом Lingo Pro.</p>
+        </div>
+        <div class="roleBadge" id="adminRoleBadge">👤 Пользователь</div>
+      </div>
+
+      <div class="adminGrid">
+        <div class="adminStat"><strong id="adminUserCount">0</strong><span class="small muted">пользователей</span></div>
+        <div class="adminStat"><strong id="adminPrivilegedCount">0</strong><span class="small muted">с правами</span></div>
+        <div class="adminStat"><strong id="adminDevLevel">0</strong><span class="small muted">уровень DevTools</span></div>
+        <div class="adminStat"><strong id="adminAuditCount">0</strong><span class="small muted">записей журнала</span></div>
+      </div>
+
+      <div class="section" style="margin-top:14px;background:rgba(255,255,255,.035)">
+        <div class="adminTop">
+          <div><h2 style="margin-bottom:4px">👥 Пользователи и права</h2><div class="adminNote">Только владелец может менять роли и индивидуальные разрешения.</div></div>
+          <button class="miniBtn" onclick="renderAdminPanel()">↻ Обновить</button>
+        </div>
+        <div style="overflow:auto;margin-top:12px">
+          <table class="adminTable">
+            <thead><tr><th>Пользователь</th><th>Роль</th><th>DevTools</th><th>Доступ</th><th>Действия</th></tr></thead>
+            <tbody id="adminUsersBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section" style="margin-top:14px;background:rgba(255,255,255,.035)">
+        <div class="adminTop">
+          <div><h2 style="margin-bottom:4px">🧰 Lingo DevTools</h2><div class="adminNote">Это внутренний DevTools Lingo Pro. Реальный DevTools браузера нельзя надёжно отключить из HTML.</div></div>
+        </div>
+        <div id="adminDevToolsContent" style="margin-top:12px"></div>
+      </div>
+
+      <div class="section" style="margin-top:14px;background:rgba(255,255,255,.035)">
+        <h2>📜 Журнал действий</h2>
+        <div id="adminAuditList"></div>
+      </div>
+
+      <div class="section" style="margin-top:14px;background:rgba(255,255,255,.035)">
+        <h2>🧩 Система ролей</h2>
+        <div id="adminRoleInfo"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Lingo Pro 🌍 • Учись каждый день</footer></div></div>
+
+<div id="menuOverlay" class="menuOverlay" onclick="if(event.target===this)closeMenu()"><div class="menu"><button class="close" onclick="closeMenu()">✕</button><h3>🦉 Lingo Pro</h3><button class="menuItem" onclick="closeMenu();showHome()">🏠 Главная</button><button class="menuItem" onclick="closeMenu();showLevels()">🗺️ Карта обучения</button><button class="menuItem" onclick="closeMenu();showStats()">📊 Статистика</button><button class="menuItem" onclick="closeMenu();reviewMistakes()">🧠 Повторить ошибки</button><button class="menuItem" onclick="showCreator()">👤 Кто создал Lingo Pro?</button><button class="menuItem" onclick="closeMenu();buyLives()">❤️ Купить жизни</button><button class="menuItem" id="adminMenuItem" style="display:none" onclick="closeMenu();openAdminPanel()">🛡️ Админ-панель</button></div></div>
+
+<div id="modalOverlay" class="modalOverlay" onclick="if(event.target===this)closeModal()"><div class="modal" id="modalContent"></div></div>
+
+<div id="feedbackOverlay" class="feedbackOverlay"><div class="feedback"><h3>⭐ Как тебе Lingo Pro?</h3><p class="muted">Ты уже немного позанимался. Оцени приложение и, если хочешь, напиши отзыв.</p><div class="feedbackStars" id="lpFeedbackStars"><button class="star" data-rating="1">★</button><button class="star" data-rating="2">★</button><button class="star" data-rating="3">★</button><button class="star" data-rating="4">★</button><button class="star" data-rating="5">★</button></div><textarea id="lpFeedbackText" rows="5" placeholder="Напиши отзыв (необязательно)"></textarea><p id="lpFeedbackStatus" class="small muted"></p><div style="display:flex;gap:8px;margin-top:10px"><button class="action" style="flex:1" id="lpFeedbackSkip">Позже</button><button class="bigBtn" style="flex:1" id="lpFeedbackSend">Отправить</button></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+const DEFAULT_GAME={name:"",userId:"",xp:0,gems:50,streak:0,lives:5,completed:[],lastDay:"",livesRecoveryAt:0,correctAnswers:0,totalAnswers:0,mistakes:0,mistakeTopics:[]};
+let game={...DEFAULT_GAME},currentLevel=1,currentQuestion=0,score=0,currentLanguage="english",currentOtherLanguageQuestions=[];
+const LIFE_RECOVERY_MS=2*60*60*1000;
+
+/* =========================
+   БАЗОВОЕ СОХРАНЕНИЕ ИГРЫ
+========================= */
+function load(){try{const s=JSON.parse(localStorage.getItem("LINGO_PRO_FINAL")||"null");if(s)game={...DEFAULT_GAME,...s}}catch(e){console.log(e)}}function save(){localStorage.setItem("LINGO_PRO_FINAL",JSON.stringify(game))}
+function screen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id)?.classList.add("active");window.scrollTo({top:0,behavior:"smooth"})}
+
+/* =========================
+   LINGO PRO ADMIN / RBAC
+   ВАЖНО: это локальный frontend RBAC.
+   Для настоящей многопользовательской безопасности
+   роли должны храниться/проверяться на сервере.
+========================= */
+const ADMIN_USERS_KEY="LINGO_PRO_ADMIN_USERS_V1";
+const ADMIN_AUDIT_KEY="LINGO_PRO_ADMIN_AUDIT_V1";
+const ADMIN_BOOTSTRAP_KEY="LINGO_PRO_OWNER_BOOTSTRAPPED_V1";
+
+const ROLE_DEFS={
+  owner:{
+    name:"Владелец",
+    icon:"👑",
+    level:100,
+    description:"Полный контроль. Только владелец может выдавать и отзывать права.",
+    permissions:["*"]
+  },
+  super_admin:{
+    name:"Главный админ",
+    icon:"🛡️",
+    level:80,
+    description:"Почти все административные функции, но без управления владельцем.",
+    permissions:[
+      "admin.dashboard","users.view","users.edit","users.block",
+      "content.view","content.create","content.edit","content.delete",
+      "reviews.view","reviews.delete","stats.view","logs.view",
+      "devtools.open","devtools.console"
+    ]
+  },
+  admin:{
+    name:"Администратор",
+    icon:"👨‍💼",
+    level:60,
+    description:"Управление обычными пользователями и контентом.",
+    permissions:[
+      "admin.dashboard","users.view","users.edit",
+      "content.view","content.create","content.edit",
+      "reviews.view","reviews.delete","stats.view","logs.view",
+      "devtools.open"
+    ]
+  },
+  moderator:{
+    name:"Модератор",
+    icon:"🛠️",
+    level:40,
+    description:"Модерация, отзывы, жалобы и ограниченные пользовательские действия.",
+    permissions:[
+      "admin.dashboard","users.view","users.block",
+      "reviews.view","reviews.delete","logs.view"
+    ]
+  },
+  user:{
+    name:"Пользователь",
+    icon:"👤",
+    level:0,
+    description:"Только функции обучения и личного профиля.",
+    permissions:[]
+  }
+};
+
+const PERMISSION_DEFS={
+  "admin.dashboard":"Открывать админ-панель",
+  "users.view":"Просматривать пользователей",
+  "users.edit":"Редактировать пользователей",
+  "users.block":"Блокировать пользователей",
+  "content.view":"Просматривать контент",
+  "content.create":"Создавать контент",
+  "content.edit":"Редактировать контент",
+  "content.delete":"Удалять контент",
+  "reviews.view":"Просматривать отзывы",
+  "reviews.delete":"Удалять отзывы",
+  "stats.view":"Просматривать статистику",
+  "settings.view":"Просматривать настройки",
+  "settings.edit":"Изменять настройки",
+  "logs.view":"Просматривать журнал действий",
+  "devtools.open":"Открывать внутренний DevTools",
+  "devtools.console":"Использовать расширенный внутренний DevTools",
+  "devtools.storage":"Просматривать хранилище Lingo",
+  "roles.view":"Просматривать роли и права",
+  "roles.manage":"Менять роли и права",
+  "owner.manage":"Управлять владельцем"
+};
+
+const ROLE_ORDER=["owner","super_admin","admin","moderator","user"];
+
+function uuid(){return "usr_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,9)}
+function nowText(){return new Date().toLocaleString("ru-RU",{dateStyle:"short",timeStyle:"short"})}
+
+function loadAdminUsers(){
+  try{
+    const x=JSON.parse(localStorage.getItem(ADMIN_USERS_KEY)||"[]");
+    return Array.isArray(x)?x:[];
+  }catch(e){return []}
+}
+function saveAdminUsers(users){localStorage.setItem(ADMIN_USERS_KEY,JSON.stringify(users))}
+function loadAudit(){
+  try{
+    const x=JSON.parse(localStorage.getItem(ADMIN_AUDIT_KEY)||"[]");
+    return Array.isArray(x)?x:[];
+  }catch(e){return []}
+}
+function saveAudit(items){localStorage.setItem(ADMIN_AUDIT_KEY,JSON.stringify(items.slice(-200)))}
+function audit(action,details){
+  const items=loadAudit();
+  const me=getCurrentAdminUser();
+  items.push({
+    at:new Date().toISOString(),
+    time:nowText(),
+    actor:me?me.name:"Система",
+    actorRole:me?me.role:"system",
+    action,
+    details
+  });
+  saveAudit(items);
+}
+
+function roleName(role){return ROLE_DEFS[role]?.name||"Пользователь"}
+function roleIcon(role){return ROLE_DEFS[role]?.icon||"👤"}
+
+function effectivePermissions(user){
+  if(!user)return [];
+  if(user.role==="owner")return ["*"];
+  if(Array.isArray(user.customPermissions))return user.customPermissions;
+  return [...(ROLE_DEFS[user.role]?.permissions||[])];
+}
+function hasPermission(permission,user=getCurrentAdminUser()){
+  if(!user)return false;
+  const p=effectivePermissions(user);
+  return p.includes("*")||p.includes(permission);
+}
+function getDevToolsLevel(user=getCurrentAdminUser()){
+  if(!user)return 0;
+  if(user.role==="owner")return 100;
+  if(!hasPermission("devtools.open",user))return 0;
+  if(hasPermission("devtools.console",user))return Math.max(60,ROLE_DEFS[user.role]?.level||0);
+  return Math.min(50,ROLE_DEFS[user.role]?.level||0);
+}
+function getCurrentAdminUser(){
+  const users=loadAdminUsers();
+  if(!game.userId)return null;
+  return users.find(u=>u.id===game.userId)||null;
+}
+
+function initAdminSystem(){
+  let users=loadAdminUsers();
+  if(!game.userId)return;
+  let me=users.find(u=>u.id===game.userId);
+
+  if(!me){
+    const ownerExists=users.some(u=>u.role==="owner");
+    me={
+      id:game.userId,
+      name:game.name||"Пользователь",
+      role:ownerExists?"user":"owner",
+      customPermissions:null,
+      blocked:false,
+      createdAt:new Date().toISOString()
+    };
+    users.push(me);
+    saveAdminUsers(users);
+    localStorage.setItem(ADMIN_BOOTSTRAP_KEY,"1");
+    audit(me.role==="owner"?"Создан владелец":"Создан пользователь",
+      me.role==="owner"?"Первый аккаунт на этом устройстве получил роль владельца.":"Создан новый пользователь.");
+  }else if(me.name!==game.name){
+    me.name=game.name||me.name;
+    saveAdminUsers(users);
+  }
+
+  updateAdminVisibility();
+}
+
+function updateAdminVisibility(){
+  const me=getCurrentAdminUser();
+  const item=document.getElementById("adminMenuItem");
+  if(item)item.style.display=me&&hasPermission("admin.dashboard",me)?"block":"none";
+}
+
+function openAdminPanel(){
+  const me=getCurrentAdminUser();
+  if(!me||!hasPermission("admin.dashboard",me)){
+    showToast("🔒 У этой роли нет доступа к админ-панели.");
+    return;
+  }
+  renderAdminPanel();
+  screen("admin");
+}
+
+function renderAdminPanel(){
+  const me=getCurrentAdminUser();
+  if(!me||!hasPermission("admin.dashboard",me)){
+    screen("home");
+    return;
+  }
+
+  const users=loadAdminUsers();
+  const audits=loadAudit();
+  const isOwner=me.role==="owner";
+
+  document.getElementById("adminRoleBadge").textContent=roleIcon(me.role)+" "+roleName(me.role);
+  document.getElementById("adminSubtitle").textContent=isOwner
+    ?"Владелец: полный контроль над ролями, правами и журналом."
+    :"Доступ ограничен разрешениями твоей роли.";
+  document.getElementById("adminUserCount").textContent=users.length;
+  document.getElementById("adminPrivilegedCount").textContent=users.filter(u=>u.role!=="user").length;
+  document.getElementById("adminDevLevel").textContent=getDevToolsLevel(me)+"/100";
+  document.getElementById("adminAuditCount").textContent=audits.length;
+
+  const body=document.getElementById("adminUsersBody");
+  body.innerHTML="";
+  users.forEach(u=>{
+    const tr=document.createElement("tr");
+    const roleOptions=ROLE_ORDER.filter(r=>r!=="owner").map(r=>`<option value="${r}" ${u.role===r?"selected":""}>${roleIcon(r)} ${roleName(r)}</option>`).join("");
+    const ownBadge=u.role==="owner"?'<span class="roleBadge">👑 OWNER</span>':"";
+    const same=u.id===me.id;
+    const canEdit=isOwner&&u.role!=="owner"&&!same;
+    const canInspect=isOwner||hasPermission("roles.view",me);
+
+    tr.innerHTML=`
+      <td><b>${escapeHtml(u.name||"Без имени")}</b><br><span class="small muted">${escapeHtml(u.id)}</span>${ownBadge}</td>
+      <td>${u.role==="owner"
+          ? '<span class="roleBadge">👑 Владелец</span>'
+          : `<select class="roleSelect" ${canEdit?"":"disabled"} onchange="changeUserRole('${u.id}',this.value)">${roleOptions}</select>`}</td>
+      <td>${getDevToolsLevel(u)}/100</td>
+      <td>${effectivePermissions(u).includes("*")?"Все права":effectivePermissions(u).length+" прав"}</td>
+      <td style="min-width:190px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          ${canInspect?`<button class="miniBtn" onclick="editUserPermissions('${u.id}')">⚙️ Права</button>`:""}
+          ${isOwner&&u.role!=="owner"&&u.id!==me.id?`<button class="miniBtn danger" onclick="resetUserPermissions('${u.id}')">↺ Сброс</button>`:""}
+        </div>
+      </td>`;
+    body.appendChild(tr);
+  });
+
+  renderDevTools();
+  renderAudit();
+  renderRoleInfo();
+}
+
+function changeUserRole(userId,newRole){
+  const me=getCurrentAdminUser();
+  if(!me||me.role!=="owner"){
+    showToast("🔒 Только владелец может менять роли.");
+    renderAdminPanel();
+    return;
+  }
+  if(!ROLE_DEFS[newRole]||newRole==="owner"){
+    showToast("❌ Нельзя назначить второго владельца.");
+    renderAdminPanel();
+    return;
+  }
+  const users=loadAdminUsers();
+  const user=users.find(u=>u.id===userId);
+  if(!user)return;
+  const old=user.role;
+  user.role=newRole;
+  user.customPermissions=null;
+  saveAdminUsers(users);
+  audit("Изменена роль",`${user.name}: ${roleName(old)} → ${roleName(newRole)}`);
+  showToast("✅ Роль изменена.");
+  renderAdminPanel();
+}
+
+function editUserPermissions(userId){
+  const me=getCurrentAdminUser();
+  if(!me||!hasPermission("roles.view",me)){
+    showToast("🔒 Недостаточно прав.");
+    return;
+  }
+  const users=loadAdminUsers();
+  const user=users.find(u=>u.id===userId);
+  if(!user)return;
+
+  const canEdit=me.role==="owner"&&user.role!=="owner"&&user.id!==me.id;
+  const active=new Set(effectivePermissions(user));
+  const permissionEntries=Object.entries(PERMISSION_DEFS).map(([key,label])=>{
+    const checked=active.has(key)||active.has("*");
+    return `<label class="permItem ${canEdit?"":"restricted"}"><input type="checkbox" data-perm="${key}" ${checked?"checked":""} ${canEdit?"":"disabled"}><span><b>${escapeHtml(label)}</b><br><span class="small muted">${escapeHtml(key)}</span></span></label>`;
+  }).join("");
+
+  document.getElementById("modalContent").innerHTML=`
+    <button class="close" onclick="closeModal()">✕</button>
+    <h3>⚙️ Права: ${escapeHtml(user.name)}</h3>
+    <p class="muted small">${roleIcon(user.role)} ${roleName(user.role)} • DevTools ${getDevToolsLevel(user)}/100</p>
+    <div class="permissionGrid">${permissionEntries}</div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="action" style="flex:1" onclick="closeModal()">Отмена</button>
+      ${canEdit?'<button class="bigBtn" style="flex:1" onclick="saveUserPermissions(\''+user.id+'\')">Сохранить</button>':''}
+    </div>`;
+  document.getElementById("modalOverlay").classList.add("show");
+}
+
+function saveUserPermissions(userId){
+  const me=getCurrentAdminUser();
+  if(!me||me.role!=="owner"){
+    showToast("🔒 Только владелец может менять разрешения.");
+    return;
+  }
+  const users=loadAdminUsers();
+  const user=users.find(u=>u.id===userId);
+  if(!user||user.role==="owner")return;
+
+  const selected=[...document.querySelectorAll("#modalContent input[data-perm]:checked")].map(x=>x.dataset.perm);
+  user.customPermissions=selected;
+  saveAdminUsers(users);
+  audit("Изменены права",`${user.name}: установлено ${selected.length} разрешений`);
+  closeModal();
+  showToast("✅ Индивидуальные права сохранены.");
+  renderAdminPanel();
+}
+
+function resetUserPermissions(userId){
+  const me=getCurrentAdminUser();
+  if(!me||me.role!=="owner")return;
+  const users=loadAdminUsers();
+  const user=users.find(u=>u.id===userId);
+  if(!user)return;
+  user.customPermissions=null;
+  saveAdminUsers(users);
+  audit("Сброшены права",`${user.name}: возвращены права по роли ${roleName(user.role)}`);
+  showToast("✅ Права возвращены к роли.");
+  renderAdminPanel();
+}
+
+function renderDevTools(){
+  const me=getCurrentAdminUser();
+  const box=document.getElementById("adminDevToolsContent");
+  if(!me)return;
+  const level=getDevToolsLevel(me);
+  if(!hasPermission("devtools.open",me) && me.role!=="owner"){
+    box.innerHTML='<div class="adminNote">🔒 Внутренний DevTools недоступен этой роли.</div>';
+    return;
+  }
+
+  const state={
+    app:"Lingo Pro 2.0",
+    currentUser:{
+      id:game.userId,
+      name:game.name,
+      role:me.role,
+      roleName:roleName(me.role)
+    },
+    permissions:effectivePermissions(me),
+    devToolsLevel:level,
+    xp:game.xp,
+    completed:game.completed.length,
+    lives:game.lives,
+    language:currentLanguage
+  };
+
+  let html=`<div class="devtoolsBox">${escapeHtml(JSON.stringify(state,null,2))}</div>`;
+  if(hasPermission("devtools.storage",me)||me.role==="owner"){
+    html+=`<div style="margin-top:10px"><button class="miniBtn" onclick="showStorageView()">🗄️ Показать LocalStorage</button></div>`;
+  }
+  box.innerHTML=html;
+}
+
+function showStorageView(){
+  const me=getCurrentAdminUser();
+  if(!me||(!hasPermission("devtools.storage",me)&&me.role!=="owner")){
+    showToast("🔒 Доступ к хранилищу запрещён.");
+    return;
+  }
+  const keys=[];
+  for(let i=0;i<localStorage.length;i++)keys.push(localStorage.key(i));
+  const out={};
+  keys.forEach(k=>{try{out[k]=JSON.parse(localStorage.getItem(k))}catch(e){out[k]=localStorage.getItem(k)}});
+  document.getElementById("modalContent").innerHTML=`
+    <button class="close" onclick="closeModal()">✕</button>
+    <h3>🗄️ LocalStorage</h3>
+    <p class="muted small">Локальное хранилище этого браузера.</p>
+    <div class="devtoolsBox">${escapeHtml(JSON.stringify(out,null,2))}</div>`;
+  document.getElementById("modalOverlay").classList.add("show");
+}
+
+function renderAudit(){
+  const me=getCurrentAdminUser();
+  const box=document.getElementById("adminAuditList");
+  if(!me||!hasPermission("logs.view",me)){
+    box.innerHTML='<div class="adminNote">🔒 Журнал недоступен этой роли.</div>';
+    return;
+  }
+  const rows=loadAudit().slice().reverse().slice(0,30);
+  box.innerHTML=rows.length?rows.map(x=>`
+    <div class="auditRow">
+      <div><b>${escapeHtml(x.action)}</b><br><span class="muted">${escapeHtml(x.details)}</span></div>
+      <div style="text-align:right"><b>${escapeHtml(x.actor)}</b><br><span class="muted">${escapeHtml(x.time)}</span></div>
+    </div>`).join(""):'<div class="adminNote">Журнал пока пуст.</div>';
+}
+
+function renderRoleInfo(){
+  const box=document.getElementById("adminRoleInfo");
+  const me=getCurrentAdminUser();
+  if(!me){box.innerHTML="";return}
+  box.innerHTML=ROLE_ORDER.map(role=>{
+    const d=ROLE_DEFS[role];
+    const p=d.permissions.includes("*")?"Все права":d.permissions.length+" базовых прав";
+    return `<div style="padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07)">
+      <b>${d.icon} ${escapeHtml(d.name)}</b>
+      <span class="small muted"> • уровень ${d.level}/100 • ${p}</span>
+      <div class="small muted" style="margin-top:4px">${escapeHtml(d.description)}</div>
+    </div>`;
+  }).join("");
+}
+
+function escapeHtml(v){
+  return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
+}
+
+/* Косметическая защита UI.
+   Реальный браузерный DevTools нельзя надежно запретить из JavaScript. */
+function installDevToolsGuard(){
+  document.addEventListener("keydown",e=>{
+    const level=getDevToolsLevel();
+    if(level>=80)return; // владелец и высокий админ-контроль не блокируются
+    const blocked=e.key==="F12" ||
+      (e.ctrlKey&&e.shiftKey&&["I","J","C"].includes(e.key.toUpperCase())) ||
+      (e.ctrlKey&&e.key.toUpperCase()==="U");
+    if(blocked){
+      e.preventDefault();
+      showToast("🔒 Developer-инструменты ограничены этой ролью.");
+    }
+  },true);
+
+  document.addEventListener("contextmenu",e=>{
+    const level=getDevToolsLevel();
+    if(level<60){
+      e.preventDefault();
+      showToast("🔒 Контекстное меню ограничено.");
+    }
+  },true);
+}
+
+/* =========================
+   КУРС
+========================= */
+const levels=["Hello & Basics","Family","Numbers","Colors","Food","Animals","Home","School","Daily Life","Time","My Day","People","Places","Shopping","Clothes","Weather","Travel","Hobbies","Health","Conversations","Present Simple","Present Continuous","Past Simple","Future","Questions","Prepositions","Adjectives","Adverbs","Countable Nouns","Comparatives","Past Continuous","Present Perfect","Modal Verbs","Conditionals","Passive Voice","Reported Speech","Gerunds","Infinitives","Relative Clauses","Advanced Questions","Business English","Technology","Environment","Education","Society","Media","Travel Advanced","Work","Communication","Culture","Advanced Vocabulary","Academic English","Complex Grammar","Idioms","Phrasal Verbs","Formal English","Debates","Writing","Listening Skills","Mastery"];
+const questionBank=[[["Choose the correct greeting:","Hello","Yesterday","Blue","Run",0],["How are you?","I'm fine, thanks.","I'm a table.","Blue.","At school.",0],["What is your name?","My name is Alex.","I am Monday.","It is red.","I have two.",0],["Choose a polite word:","Please","Yesterday","Cat","Run",0],["Goodbye means:","До свидания","Спасибо","Пожалуйста","Доброе утро",0]],[["My mother's daughter is my...","sister","uncle","father","cousin",0],["My father's son is my...","brother","aunt","mother","grandmother",0],["My parents' daughter is their...","daughter","uncle","brother","grandfather",0],["My mother's husband is my...","father","brother","son","cousin",0],["My father's mother is my...","grandmother","sister","daughter","aunt",0]],[["What number comes after ten?","Eleven","Nine","Twenty","Twelve",0],["Five plus three is...","Eight","Six","Seven","Ten",0],["How many days are in a week?","Seven","Five","Ten","Twelve",0],["Twenty means...","20","12","2","200",0],["Which is an even number?","8","7","9","11",0]],[["The color of grass is usually...","green","blue","black","pink",0],["The sky on a clear day is usually...","blue","orange","purple","black",0],["A banana is usually...","yellow","blue","grey","purple",0],["Snow is usually...","white","green","red","brown",0],["A strawberry is often...","red","blue","black","white",0]]];
+
+function genericQuestions(topic){return[[`What does "${topic}" relate to?`,`${topic} is the lesson topic`,`A random object`,`A number`,`Nothing`,0],["Choose the best learning strategy:","Understand the meaning and use it in context","Memorize without understanding","Skip the topic","Guess everything",0],["What should you do after a mistake?","Review it and try again","Close the lesson","Delete your progress","Never repeat it",0],["Which answer is usually best in a language lesson?","The one that fits the context","The longest one","The first one","The shortest one",0],["What helps language progress most?","Regular practice","Studying once a year","Avoiding mistakes","Never speaking",0]]}
+function getQuestions(){return questionBank[currentLevel-1]||genericQuestions(levels[currentLevel-1])}
+function getNextLevel(){for(let i=1;i<=60;i++)if(!game.completed.includes(i))return i;return 60}
+function showHome(){if(!game.name){screen("profile");return}document.getElementById("username").textContent=game.name;update();updateAdminVisibility();screen("home")}
+function update(){checkLifeRecovery();["xp","homeXP"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=game.xp});const s=document.getElementById("streak");if(s)s.textContent=game.streak;const g=document.getElementById("gems");if(g)g.textContent=game.gems;const hg=document.getElementById("homeGems");if(hg)hg.textContent=game.gems;const l=document.getElementById("lives");if(l)l.textContent=game.lives;const hl=document.getElementById("homeLives");if(hl)hl.textContent=game.lives+"/5";const d=game.completed.length,p=Math.round(d/60*100);document.getElementById("progressText").textContent=d+" / 60 уровней";document.getElementById("percentText").textContent=p+"%";document.getElementById("progressBar").style.width=p+"%";const n=getNextLevel();document.getElementById("todayTitle").textContent="Уровень "+n+" — "+levels[n-1];document.getElementById("weakText").textContent=game.mistakeTopics.length?"Повтори: "+[...new Set(game.mistakeTopics)].slice(-2).join(", "):"Пока ошибок мало — продолжай учиться!"}
+function continueLearning(){startLevel(getNextLevel())}
+function registerUser(){
+  const n=document.getElementById("nameInput").value.trim();
+  if(!n){alert("Введи своё имя.");return}
+  game.name=n;
+  if(!game.userId)game.userId=uuid();
+  save();
+  initAdminSystem();
+  showHome();
+}
+function selectLanguage(k){currentLanguage=k;document.getElementById("languagePill").textContent="🇬🇧 Английский • A1";showHome()}
+function showLevels(){const list=document.getElementById("levelList");list.innerHTML="";for(let i=1;i<=60;i++){const b=document.createElement("button"),done=game.completed.includes(i),unlocked=i===1||game.completed.includes(i-1);b.className="levelNode "+(done?"done ":"")+(i===getNextLevel()?"current ":"")+(!unlocked?"locked":"");b.innerHTML="<b>"+(done?"✓":i)+"</b><br><span class='small'>"+levels[i-1]+"</span>";b.onclick=()=>unlocked?startLevel(i):alert("Сначала пройди предыдущий уровень.");list.appendChild(b)}screen("levels")}
+function startLevel(level){if(game.lives<=0){alert("💔 У тебя 0 жизней.\n\n⏳ Подожди восстановления или купи 5 жизней за 70 💎.");return}currentLanguage="english";currentLevel=Math.max(1,Math.min(60,level));currentQuestion=0;score=0;document.getElementById("levelTitle").textContent="Уровень "+currentLevel+" — "+levels[currentLevel-1];screen("quiz");showQuestion()}
+function showQuestion(){const q=getQuestions()[currentQuestion];document.getElementById("qNumber").textContent=(currentQuestion+1)+" / 5";document.getElementById("quizBar").style.width=((currentQuestion)/5*100)+"%";document.getElementById("question").textContent=q[0];document.getElementById("answerHint").textContent="";const box=document.getElementById("answers");box.innerHTML="";[{text:q[1],index:0},{text:q[2],index:1},{text:q[3],index:2},{text:q[4],index:3}].sort(()=>Math.random()-.5).forEach(a=>{const b=document.createElement("button");b.className="answer";b.textContent=a.text;b.onclick=()=>answer(b,a.index,q[5]);box.appendChild(b)})}
+function answer(button,selected,correct){document.querySelectorAll(".answer").forEach(b=>b.disabled=true);game.totalAnswers++;if(selected===correct){button.classList.add("correct");score++;game.correctAnswers++;game.xp+=10;document.getElementById("answerHint").textContent="✅ Правильно! +10 XP"}else{button.classList.add("wrong");game.mistakes++;game.mistakeTopics.push(levels[currentLevel-1]);document.getElementById("answerHint").textContent="❌ Неправильно. Потеряна 1 ❤️";if(loseLife())return}save();update();setTimeout(()=>{currentQuestion++;if(currentQuestion>=5)finishLevel();else showQuestion()},650)}
+function finishLevel(){if(!game.completed.includes(currentLevel))game.completed.push(currentLevel);game.xp+=Math.max(10,score*10);game.streak=Math.max(1,game.streak+1);save();update();setTimeout(()=>{alert("🎉 Уровень завершён!\n\nПравильных ответов: "+score+"/5\n⭐ Получено XP: "+(10+score*10));showHome()},150)}
+function formatRecoveryTime(ms){const t=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60;return h+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}function checkLifeRecovery(){if(game.lives>=5){game.lives=5;game.livesRecoveryAt=0;updateRecoveryText();return}if(!game.livesRecoveryAt){game.livesRecoveryAt=Date.now()+LIFE_RECOVERY_MS;save()}const r=game.livesRecoveryAt-Date.now();if(r<=0){game.lives=5;game.livesRecoveryAt=0;save();updateRecoveryText();return}updateRecoveryText(r)}function updateRecoveryText(r){const e=document.getElementById("livesRecovery");if(e)e.textContent=game.lives>=5?"❤️ У тебя все 5 жизней!":"⏳ Жизни восстановятся через "+formatRecoveryTime(r===undefined?Math.max(0,(game.livesRecoveryAt||0)-Date.now()):r)}function updateLives(){const e=document.getElementById("lives");if(e)e.textContent=game.lives;updateRecoveryText()}function buyLives(){if(game.lives>=5){alert("❤️ У тебя уже 5 жизней.");return}if(game.gems<70){alert("💎 Нужно 70 кристаллов.");return}game.gems-=70;game.lives=5;game.livesRecoveryAt=0;save();update();alert("❤️ Куплено 5 жизней!")}function loseLife(){game.lives=Math.max(0,game.lives-1);if(game.lives<5&&!game.livesRecoveryAt)game.livesRecoveryAt=Date.now()+LIFE_RECOVERY_MS;save();updateLives();update();if(game.lives===0){const old=currentLevel,n=Math.max(1,old-2);game.completed=game.completed.filter(x=>x<n);save();setTimeout(()=>{alert("💔 Все жизни закончились.\nТы опускаешься с уровня "+old+" на уровень "+n+".\n\n❤️ Сейчас: 0/5\n⏳ Восстановление — 2 часа или покупка за 70 💎.");showHome()},300);return true}return false}
+function showStats(){document.getElementById("statLevels").textContent=game.completed.length;document.getElementById("statXP").textContent=game.xp;document.getElementById("statCorrect").textContent=game.totalAnswers?Math.round(game.correctAnswers/game.totalAnswers*100)+"%":"0%";document.getElementById("statMistakes").textContent=game.mistakes;document.getElementById("owlAdvice").textContent=game.mistakeTopics.length?"🦉 Ты ошибался в теме «"+game.mistakeTopics.at(-1)+"». Повтори её ещё раз.":"🦉 Пока слабых тем не обнаружено. Продолжай регулярно заниматься!";screen("stats")}
+function reviewMistakes(){if(!game.mistakeTopics.length){alert("🦉 Пока нет ошибок для повторения. Пройди несколько уроков.");return}startLevel(Math.max(1,levels.indexOf(game.mistakeTopics.at(-1))+1))}
+
+const languageCourses={korean:{title:"🇰🇷 한국어",description:"Корейский курс: буквы, грамматика и тесты. Эксклюзивно для Ахмада.",exclusive:true},chinese:{title:"🇨🇳 中文",description:"Китайский: иероглифы, грамматика, смысл и контекст. 60 уровней A1–C2."},german:{title:"🇩🇪 Deutsch",description:"Немецкий: грамматика, перевод и формальный язык. 60 уровней A1–C2."}};
+const langTopics=["Буквы и основы","Базовые слова","Простые фразы","Грамматика","Повседневная речь","Чтение","Время","Вопросы","Предложения","Диалоги"];
+function languageTopic(level){const g=Math.floor((level-1)/10),ce=level<=10?"A1":level<=20?"A2":level<=30?"B1":level<=40?"B2":level<=50?"C1":"C2";return{cefr:ce,topic:langTopics[g]||"Продвинутый язык"}}
+function openLanguage(key){const c=languageCourses[key];if(!c)return;if(c.exclusive){const raw=prompt("🔐 Корейский — эксклюзивный курс для Ахмада.\nВведите код доступа:");if(raw===null)return;if(!["ахмад-2009","ahmad-2009"].includes(raw.normalize("NFKC").trim().toLowerCase())){alert("❌ Неверный код.");return}}currentLanguage=key;showLanguageCourse()}
+function showLanguageCourse(){const c=languageCourses[currentLanguage];document.getElementById("languageTitle").textContent=c.title;document.getElementById("languageDescription").textContent=c.description;const list=document.getElementById("languageLevelList");list.innerHTML="";for(let i=1;i<=60;i++){const n=document.createElement("button"),t=languageTopic(i);n.className="levelNode";n.innerHTML="<b>"+i+" • "+t.cefr+"</b><br><span class='small'>"+t.topic+"</span>";n.onclick=()=>languageLesson(i);list.appendChild(n)}screen("languageCourse")}
+const otherLanguageQuestions={korean:[["Что означает «안녕하세요»?","Здравствуйте","Спасибо","До свидания","Извините",0],["Что означает «감사합니다»?","Спасибо","Здравствуйте","Да","Нет",0],["Выбери «Я студент».","저는 학생입니다","오늘 날씨가 좋습니다","감사합니다","안녕하세요",0],["Что означает «오늘»?","Сегодня","Завтра","Вчера","Неделя",0],["Что помогает учить корейский лучше?","Регулярная практика","Не повторять слова","Пропускать уроки","Только угадывать",0]],chinese:[["Что означает «你好»?","Здравствуйте","Спасибо","До свидания","Пожалуйста",0],["Что означает «谢谢»?","Спасибо","Здравствуйте","Да","Нет",0],["Выбери «Я студент».","我是学生。","你好","谢谢","明天",0],["Что означает «今天»?","Сегодня","Вчера","Завтра","Неделя",0],["Что помогает учить китайский лучше?","Регулярная практика","Не повторять слова","Пропускать уроки","Только угадывать",0]],german:[["Что означает «Hallo»?","Привет","Спасибо","До свидания","Пожалуйста",0],["Что означает «Danke»?","Спасибо","Здравствуйте","Да","Нет",0],["Выбери «Я студент».","Ich bin Student.","Ich habe Zeit.","Guten Morgen.","Danke.",0],["Что означает «heute»?","Сегодня","Вчера","Завтра","Неделя",0],["Что помогает учить немецкий лучше?","Регулярная практика","Не повторять слова","Пропускать уроки","Только угадывать",0]]};
+function languageLesson(level){if(!languageCourses[currentLanguage])return;currentLevel=Math.max(1,Math.min(60,Number(level)||1));currentQuestion=0;score=0;currentOtherLanguageQuestions=otherLanguageQuestions[currentLanguage]||[];document.getElementById("levelTitle").textContent=languageCourses[currentLanguage].title+" — уровень "+currentLevel;screen("quiz");showOtherLanguageQuestion()}
+function showOtherLanguageQuestion(){const q=currentOtherLanguageQuestions[currentQuestion%5];document.getElementById("qNumber").textContent=(currentQuestion+1)+" / 5";document.getElementById("quizBar").style.width=((currentQuestion)/5*100)+"%";document.getElementById("question").textContent=q[0];document.getElementById("answerHint").textContent="";const box=document.getElementById("answers");box.innerHTML="";[{text:q[1],index:0},{text:q[2],index:1},{text:q[3],index:2},{text:q[4],index:3}].sort(()=>Math.random()-.5).forEach(a=>{const b=document.createElement("button");b.className="answer";b.textContent=a.text;b.onclick=()=>answerOtherLanguage(b,a.index,q[5]);box.appendChild(b)})}
+function answerOtherLanguage(button,selected,correct){document.querySelectorAll(".answer").forEach(b=>b.disabled=true);game.totalAnswers++;if(selected===correct){button.classList.add("correct");score++;game.correctAnswers++;game.xp+=10;document.getElementById("answerHint").textContent="✅ Правильно! +10 XP"}else{button.classList.add("wrong");game.mistakes++;game.mistakeTopics.push(languageTopic(currentLevel).topic);document.getElementById("answerHint").textContent="❌ Неправильно. Потеряна 1 ❤️";if(loseLife())return}save();update();setTimeout(()=>{currentQuestion++;if(currentQuestion>=5)finishOtherLanguageLevel();else showOtherLanguageQuestion()},650)}
+function finishOtherLanguageLevel(){game.xp+=Math.max(10,score*10);game.streak=Math.max(1,game.streak+1);save();update();setTimeout(()=>{alert("🎉 Уровень завершён!\n\nПравильных ответов: "+score+"/5\n⭐ Получено XP: "+(10+score*10));showLanguageCourse()},150)}
+
+function openMenu(){updateAdminVisibility();document.getElementById("menuOverlay").classList.add("show")}
+function closeMenu(){document.getElementById("menuOverlay").classList.remove("show")}
+function showCreator(){document.getElementById("modalContent").innerHTML='<button class="close" onclick="closeModal()">✕</button><div style="font-size:45px">🦉</div><h3>Кто создал Lingo Pro?</h3><p class="muted">Создатель: <b style="color:#fff">Мухаммад Сайзода</b></p><p class="small muted">Lingo Pro создан для удобного ежедневного изучения языков.</p>';closeMenu();document.getElementById("modalOverlay").classList.add("show")}
+function closeModal(){document.getElementById("modalOverlay").classList.remove("show")}
+function showToast(msg){const e=document.getElementById("toast");e.textContent=msg;e.style.display="block";clearTimeout(window.__toastT);window.__toastT=setTimeout(()=>e.style.display="none",2200)}
+
+/* FEEDBACK: exactly 3 minutes of visible use. */
+const LP_FEEDBACK_TIME=3*60*1000,LP_FEEDBACK_USAGE_KEY="LINGO_PRO_FEEDBACK_USAGE_MS",LP_FEEDBACK_SENT_KEY="LINGO_PRO_FEEDBACK_SENT";
+let lpFeedbackUsage=Number(localStorage.getItem(LP_FEEDBACK_USAGE_KEY)||0),lpFeedbackLastTick=Date.now(),lpFeedbackRating=0,lpFeedbackShown=false;
+function showLingoFeedback(){if(lpFeedbackShown||localStorage.getItem(LP_FEEDBACK_SENT_KEY)==="1")return;lpFeedbackShown=true;lpFeedbackRating=0;document.querySelectorAll(".star").forEach(s=>s.classList.remove("active"));document.getElementById("lpFeedbackStatus").textContent="";document.getElementById("feedbackOverlay").classList.add("show")}
+function closeLingoFeedback(){document.getElementById("feedbackOverlay").classList.remove("show");lpFeedbackShown=false}
+function sendLingoFeedback(){const text=document.getElementById("lpFeedbackText").value.trim(),status=document.getElementById("lpFeedbackStatus");if(!lpFeedbackRating){status.textContent="Поставь оценку от 1 до 5 ⭐";return}status.textContent="Отправляем отзыв…";const form=document.createElement("form");form.method="POST";form.action="https://formsubmit.co/fsaidov581@gmail.com";form.target="lpFeedbackHiddenFrame";const fields={_subject:"Lingo Pro — новый отзыв",_captcha:"false",_template:"table",rating:lpFeedbackRating+" / 5",review:text||"(без текста)",user:game.name||"Гость",xp:game.xp,completed:game.completed.length};Object.entries(fields).forEach(([k,v])=>{const i=document.createElement("input");i.type="hidden";i.name=k;i.value=v;form.appendChild(i)});let frame=document.getElementById("lpFeedbackHiddenFrame");if(!frame){frame=document.createElement("iframe");frame.id="lpFeedbackHiddenFrame";frame.name="lpFeedbackHiddenFrame";frame.style.display="none";document.body.appendChild(frame)}document.body.appendChild(form);form.submit();form.remove();localStorage.setItem(LP_FEEDBACK_SENT_KEY,"1");localStorage.setItem("LINGO_PRO_LAST_FEEDBACK",JSON.stringify({rating:lpFeedbackRating,review:text,date:new Date().toISOString()}));status.textContent="Спасибо! Отзыв отправлен.";setTimeout(closeLingoFeedback,900)}
+function lpFeedbackTick(){const now=Date.now();if(document.visibilityState==="visible"){lpFeedbackUsage+=now-lpFeedbackLastTick;if(lpFeedbackUsage>LP_FEEDBACK_TIME)lpFeedbackUsage=LP_FEEDBACK_TIME;localStorage.setItem(LP_FEEDBACK_USAGE_KEY,String(lpFeedbackUsage));if(lpFeedbackUsage>=LP_FEEDBACK_TIME)showLingoFeedback()}lpFeedbackLastTick=now}
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll(".star").forEach(s=>s.addEventListener("click",()=>{lpFeedbackRating=Number(s.dataset.rating);document.querySelectorAll(".star").forEach(x=>x.classList.toggle("active",Number(x.dataset.rating)<=lpFeedbackRating))}));
+  document.getElementById("lpFeedbackSend").addEventListener("click",sendLingoFeedback);
+  document.getElementById("lpFeedbackSkip").addEventListener("click",closeLingoFeedback);
+  installDevToolsGuard();
+});
+document.addEventListener("visibilitychange",()=>lpFeedbackLastTick=Date.now());
+setInterval(lpFeedbackTick,1000);
+
+load();
+if(!game.userId && game.name){game.userId=uuid();save();}
+if(game.name){initAdminSystem();showHome()}else screen("profile");
+setInterval(()=>{checkLifeRecovery();update()},1000);
+</script>
+</body>
+</html>
+'''
+
+out = Path("/mnt/data/Lingo_Pro_2.0_ADMIN_READY.html")
+out.write_text(html, encoding="utf-8")
+print(out)
